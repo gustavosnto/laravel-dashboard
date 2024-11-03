@@ -34,35 +34,33 @@ const deleteBusiness = async (id) => {
 
         <div>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div>
-                    <div class="p-6 text-gray-900">
-                        <table class="min-w-full bg-white border border-gray-300 text-left">
-                            <thead>
-                                <tr>
-                                    <th class="border-b p-2">ID</th>
-                                    <th class="border-b p-2">CNPJ</th>
-                                    <th class="border-b p-2">Razão Social</th>
-                                    <th class="border-b p-2">Cidade</th>
-                                    <th class="border-b p-2">UF</th>
-                                    <th class="border-b p-2">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="business in businesses" :key="business.id">
-                                    <td class="border-b p-2">{{ business.id }}</td>
-                                    <td class="border-b p-2">{{ business.cnpj ? maskCNPJ(business.cnpj) : '' }}</td> <!-- Atualização para evitar erros -->
-                                    <td class="border-b p-2">{{ business.razao }}</td>
-                                    <td class="border-b p-2">{{ business.cidade }}</td>
-                                    <td class="border-b p-2">{{ business.uf }}</td>
-                                    <td class="border-b p-2">
-                                        <a :href="`/dashboard/business/${business.id}`" class="text-blue-600">Ver</a>
-                                        <a :href="`/dashboard/business/${business.id}/edit`" class="text-green-600 ml-2">Editar</a>
-                                        <button @click="deleteBusiness(business.id)" class="text-red-600 ml-2">Deletar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="overflow-x-auto"> <!-- Permite rolagem horizontal -->
+                    <table class="min-w-full bg-white border border-gray-300 text-left">
+                        <thead>
+                            <tr>
+                                <th class="border-b p-2">ID</th>
+                                <th class="border-b p-2">CNPJ</th>
+                                <th class="border-b p-2">Razão Social</th>
+                                <th class="border-b p-2">Cidade</th>
+                                <th class="border-b p-2">UF</th>
+                                <th class="border-b p-2">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="business in businesses" :key="business.id" class="whitespace-nowrap"> <!-- Adicionada classe para evitar quebras de linha -->
+                                <td class="border-b p-2">{{ business.id }}</td>
+                                <td class="border-b p-2">{{ business.cnpj ? maskCNPJ(business.cnpj) : '' }}</td>
+                                <td class="border-b p-2">{{ business.razao }}</td>
+                                <td class="border-b p-2">{{ business.cidade }}</td>
+                                <td class="border-b p-2">{{ business.uf }}</td>
+                                <td class="border-b p-2">
+                                    <a :href="`/dashboard/business/${business.id}`" class="text-blue-600">Ver</a>
+                                    <a :href="`/dashboard/business/${business.id}/edit`" class="text-green-600 ml-2">Editar</a>
+                                    <button @click="deleteBusiness(business.id)" class="text-red-600 ml-2">Deletar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
