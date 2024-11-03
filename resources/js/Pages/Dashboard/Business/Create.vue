@@ -51,7 +51,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Create Business" />
+    <Head title="Adicionar Empresa" />
 
     <AuthenticatedLayout>
         <template #header>

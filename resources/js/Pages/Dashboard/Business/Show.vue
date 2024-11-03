@@ -25,7 +25,7 @@ const formatCEP = (cep) => {
 </script>
 
 <template>
-    <Head title="Business Details" />
+    <Head title="Detalhes da Empresa" />
 
     <AuthenticatedLayout>
         <template #header>

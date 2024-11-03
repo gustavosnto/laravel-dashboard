@@ -43,7 +43,7 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('business.index')"  
                                     :active="route().current('business.index')"
                                 >
-                                    Business
+                                    Empresas
                                 </NavLink>
 
                             </div>
@@ -81,14 +81,14 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink
                                             :href="route('profile.edit')"
                                         >
-                                            Profile
+                                            Minha Conta
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            Sair
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -157,7 +157,7 @@ const showingNavigationDropdown = ref(false);
                             :href="route('business.index')"
                             :active="route().current('business.index')"
                         >
-                            Business
+                            Empresas
                         </ResponsiveNavLink>
                     </div>
 
@@ -178,14 +178,14 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Minha Conta
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
                             >
-                                Log Out
+                                Sair
                             </ResponsiveNavLink>
                         </div>
                     </div>

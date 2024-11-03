@@ -19,7 +19,7 @@ const deleteBusiness = async (id) => {
 </script>
 
 <template>
-    <Head title="Business List" />
+    <Head title="Empresas" />
 
     <AuthenticatedLayout>
         <template #header>
