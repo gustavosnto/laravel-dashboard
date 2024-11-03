@@ -1,8 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+
+// Função para remover a máscara e retornar apenas números
+const removeMask = (value) => value.replace(/\D/g, '');
 
 const form = useForm({
     cnpj: '',
@@ -17,7 +19,33 @@ const form = useForm({
     nome_socio: '',
 });
 
+// Função para buscar endereço pelo CEP
+const fetchAddress = async () => {
+    const cleanCep = removeMask(form.cep); // Remove a máscara do CEP
+    if (cleanCep.length === 8) { // Verifica se o CEP tem 8 caracteres
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`); // Usa o CEP limpo na requisição
+        const data = await response.json();
+        if (!data.erro) {
+            form.endereco = data.logradouro;
+            form.uf = data.uf;
+            form.cidade = data.localidade;
+        } else {
+            alert('CEP não encontrado.');
+            form.endereco = '';
+            form.uf = '';
+            form.cidade = '';
+        }
+    }
+};
+
+// Função de envio que remove as máscaras antes de enviar
 const submit = () => {
+    // Remover máscaras de todos os campos antes de enviar
+    form.cnpj = removeMask(form.cnpj);
+    form.cep = removeMask(form.cep);
+    form.telefone = removeMask(form.telefone);
+
+    // Enviar os dados limpos
     form.post('/dashboard/business');
 };
 </script>
@@ -40,7 +68,7 @@ const submit = () => {
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
                                     <label for="cnpj" class="block text-sm font-medium text-gray-700">CNPJ</label>
-                                    <input v-model="form.cnpj" type="text" id="cnpj" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.cnpj" v-mask="'##.###.###/####-##'" type="text" id="cnpj" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="razao" class="block text-sm font-medium text-gray-700">Razão Social</label>
@@ -48,7 +76,7 @@ const submit = () => {
                                 </div>
                                 <div>
                                     <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
-                                    <input v-model="form.cep" type="text" id="cep" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.cep" v-mask="'#####-###'" @blur="fetchAddress" type="text" id="cep" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="endereco" class="block text-sm font-medium text-gray-700">Endereço</label>
@@ -72,7 +100,7 @@ const submit = () => {
                                 </div>
                                 <div>
                                     <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>
-                                    <input v-model="form.telefone" type="text" id="telefone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.telefone" v-mask="'(##) #####-####'" type="text" id="telefone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="nome_socio" class="block text-sm font-medium text-gray-700">Nome do Sócio</label>

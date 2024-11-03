@@ -6,6 +6,22 @@ import { defineProps } from 'vue';
 const props = defineProps({
     business: Object,
 });
+
+// Funções para formatar os dados
+const formatCNPJ = (cnpj) => {
+    if (!cnpj) return '';
+    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+};
+
+const formatPhone = (phone) => {
+    if (!phone) return '';
+    return phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+};
+
+const formatCEP = (cep) => {
+    if (!cep) return '';
+    return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
+};
 </script>
 
 <template>
@@ -24,7 +40,7 @@ const props = defineProps({
                     <div class="p-6 text-gray-900">
                         <div>
                             <h3 class="text-lg font-bold">CNPJ:</h3>
-                            <p>{{ business.cnpj }}</p>
+                            <p>{{ formatCNPJ(business.cnpj) }}</p> <!-- Aplicando a formatação -->
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Razão Social:</h3>
@@ -34,12 +50,12 @@ const props = defineProps({
                             <h3 class="text-lg font-bold">Endereço:</h3>
                             <p>{{ business.endereco }}, {{ business.numero }}</p>
                             <p>{{ business.cidade }} - {{ business.uf }}</p>
-                            <p>CEP: {{ business.cep }}</p>
+                            <p>CEP: {{ formatCEP(business.cep) }}</p> <!-- Aplicando a formatação -->
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Contato:</h3>
                             <p>Email: {{ business.email }}</p>
-                            <p>Telefone: {{ business.telefone }}</p>
+                            <p>Telefone: {{ formatPhone(business.telefone) }}</p> <!-- Aplicando a formatação -->
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Nome do Sócio:</h3>

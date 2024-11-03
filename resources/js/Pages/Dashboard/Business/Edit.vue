@@ -4,10 +4,12 @@ import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { defineProps } from 'vue';
 
+// Definindo as propriedades recebidas
 const props = defineProps({
     business: Object,
 });
 
+// Criando o formulário usando a biblioteca Inertia
 const form = useForm({
     cnpj: props.business.cnpj,
     razao: props.business.razao,
@@ -21,6 +23,26 @@ const form = useForm({
     nome_socio: props.business.nome_socio,
 });
 
+// Função para buscar endereço pelo CEP
+const fetchAddress = async () => {
+    const cleanCep = form.cep.replace(/\D/g, ''); // Remove a máscara do CEP
+    if (cleanCep.length === 8) { // Verifica se o CEP tem 8 caracteres
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`); // Usa o CEP limpo na requisição
+        const data = await response.json();
+        if (!data.erro) {
+            form.endereco = data.logradouro;
+            form.uf = data.uf;
+            form.cidade = data.localidade;
+        } else {
+            alert('CEP não encontrado.');
+            form.endereco = '';
+            form.uf = '';
+            form.cidade = '';
+        }
+    }
+};
+
+// Função de envio
 const submit = () => {
     form.put(`/dashboard/business/${props.business.id}`);
 };
@@ -44,7 +66,7 @@ const submit = () => {
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
                                     <label for="cnpj" class="block text-sm font-medium text-gray-700">CNPJ</label>
-                                    <input v-model="form.cnpj" type="text" id="cnpj" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.cnpj" v-mask="'##.###.###/####-##'" type="text" id="cnpj" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="razao" class="block text-sm font-medium text-gray-700">Razão Social</label>
@@ -52,7 +74,7 @@ const submit = () => {
                                 </div>
                                 <div>
                                     <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
-                                    <input v-model="form.cep" type="text" id="cep" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.cep" v-mask="'#####-###'" @blur="fetchAddress" type="text" id="cep" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="endereco" class="block text-sm font-medium text-gray-700">Endereço</label>
@@ -76,7 +98,7 @@ const submit = () => {
                                 </div>
                                 <div>
                                     <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone</label>
-                                    <input v-model="form.telefone" type="text" id="telefone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
+                                    <input v-model="form.telefone" v-mask="'(##) #####-####'" type="text" id="telefone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
                                 </div>
                                 <div>
                                     <label for="nome_socio" class="block text-sm font-medium text-gray-700">Nome do Sócio</label>
