@@ -68,6 +68,13 @@ class BusinessController extends Controller
     // Método para atualizar um negócio
     public function update(Request $request, $id)
     {
+        // Limpar campos antes da validação
+        $request->merge([
+            'cnpj' => preg_replace('/\D/', '', $request->cnpj), // Remove todos os caracteres não numéricos
+            'cep' => preg_replace('/\D/', '', $request->cep), // Remove todos os caracteres não numéricos
+            'telefone' => preg_replace('/\D/', '', $request->telefone), // Remove todos os caracteres não numéricos
+        ]);
+
         $request->validate([
             'cnpj' => 'required|string|max:14',
             'razao' => 'required|string|max:255',

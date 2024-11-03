@@ -25,10 +25,10 @@ const deleteBusiness = async (id) => {
         <template #header>
             <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Business List
+                    Empresas
                 </h2>
                 
-                <a class="bg-blue-500 text-white px-4 py-2 rounded" href="/dashboard/business/create">Add New Business</a>
+                <a class="bg-blue-500 text-white px-4 py-2 rounded" href="/dashboard/business/create">Adicionar Empresa</a>
             </div>
         </template>
 
@@ -44,7 +44,7 @@ const deleteBusiness = async (id) => {
                                     <th class="border-b p-2">Razão Social</th>
                                     <th class="border-b p-2">Cidade</th>
                                     <th class="border-b p-2">UF</th>
-                                    <th class="border-b p-2">Actions</th>
+                                    <th class="border-b p-2">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,9 +55,9 @@ const deleteBusiness = async (id) => {
                                     <td class="border-b p-2">{{ business.cidade }}</td>
                                     <td class="border-b p-2">{{ business.uf }}</td>
                                     <td class="border-b p-2">
-                                        <a :href="`/dashboard/business/${business.id}`" class="text-blue-600">View</a>
-                                        <a :href="`/dashboard/business/${business.id}/edit`" class="text-green-600 ml-2">Edit</a>
-                                        <button @click="deleteBusiness(business.id)" class="text-red-600 ml-2">Delete</button>
+                                        <a :href="`/dashboard/business/${business.id}`" class="text-blue-600">Ver</a>
+                                        <a :href="`/dashboard/business/${business.id}/edit`" class="text-green-600 ml-2">Editar</a>
+                                        <button @click="deleteBusiness(business.id)" class="text-red-600 ml-2">Deletar</button>
                                     </td>
                                 </tr>
                             </tbody>

@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { defineProps } from 'vue';
+import { Inertia } from '@inertiajs/inertia'; // Importando Inertia para o redirecionamento
 
 // Definindo as propriedades recebidas
 const props = defineProps({
@@ -44,17 +45,39 @@ const fetchAddress = async () => {
 
 // Função de envio
 const submit = () => {
-    form.put(`/dashboard/business/${props.business.id}`);
+    // Remove a máscara dos campos antes de enviar
+    const cleanData = {
+        cnpj: form.cnpj.replace(/\D/g, ''), // Limpa a máscara do CNPJ
+        razao: form.razao,
+        cep: form.cep.replace(/\D/g, ''), // Limpa a máscara do CEP
+        endereco: form.endereco,
+        numero: form.numero,
+        uf: form.uf,
+        cidade: form.cidade,
+        email: form.email,
+        telefone: form.telefone.replace(/\D/g, ''), // Limpa a máscara do telefone
+        nome_socio: form.nome_socio,
+    };
+
+    form.put(`/dashboard/business/${props.business.id}`, {
+        data: cleanData,
+        onSuccess: () => {
+            Inertia.visit('/dashboard/business');
+        },
+        onError: (errors) => {
+            console.error("Erro ao atualizar:", errors); // Log de erros
+        }
+    });
 };
 </script>
 
 <template>
-    <Head title="Edit Business" />
+    <Head title="Editar Empresa" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Edit Business
+                Editar Empresa
             </h2>
         </template>
 
@@ -106,7 +129,7 @@ const submit = () => {
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Business</button>
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Atualizar empresa</button>
                             </div>
                         </form>
                     </div>

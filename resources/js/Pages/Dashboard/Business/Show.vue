@@ -30,7 +30,7 @@ const formatCEP = (cep) => {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Business Details
+                Detalhes
             </h2>
         </template>
 
@@ -62,8 +62,8 @@ const formatCEP = (cep) => {
                             <p>{{ business.nome_socio }}</p>
                         </div>
                         <div class="mt-6">
-                            <a class="bg-blue-500 text-white px-4 py-2 rounded" :href="`/dashboard/business/${business.id}/edit`">Edit Business</a>
-                            <a class="bg-gray-500 text-white px-4 py-2 rounded ml-2" href="/dashboard/business">Back to List</a>
+                            <a class="bg-blue-500 text-white px-4 py-2 rounded" :href="`/dashboard/business/${business.id}/edit`">Editar empresa</a>
+                            <a class="bg-gray-500 text-white px-4 py-2 rounded ml-2" href="/dashboard/business">Voltar para listagem</a>
                         </div>
                     </div>
                 </div>
