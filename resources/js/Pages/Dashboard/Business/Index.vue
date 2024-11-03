@@ -24,11 +24,11 @@ const deleteBusiness = async (id) => {
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                <h2 class="text-xl font-semibold leading-tight text-white">
                     Empresas
                 </h2>
                 
-                <a class="bg-blue-500 text-white px-4 py-2 rounded" href="/dashboard/business/create">Adicionar Empresa</a>
+                <a class="bg-main text-black px-4 py-2 rounded" href="/dashboard/business/create">Adicionar Empresa</a>
             </div>
         </template>
 

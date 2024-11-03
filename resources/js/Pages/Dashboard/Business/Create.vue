@@ -55,8 +55,8 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Create New Business
+            <h2 class="text-xl font-semibold leading-tight text-white">
+                Adicionar Empresa
             </h2>
         </template>
 
