@@ -23,7 +23,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Create Project" />
+    <Head title="Adicionar Novo Projeto" />
 
     <AuthenticatedLayout>
         <template #header>
