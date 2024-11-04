@@ -7,7 +7,6 @@ const props = defineProps({
     business: Object,
 });
 
-// Funções para formatar os dados
 const formatCNPJ = (cnpj) => {
     if (!cnpj) return '';
     return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
@@ -71,7 +70,3 @@ const formatCEP = (cep) => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-/* Adicione estilos específicos para o componente aqui */
-</style>

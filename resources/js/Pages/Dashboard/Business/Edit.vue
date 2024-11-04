@@ -3,14 +3,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { defineProps } from 'vue';
-import { Inertia } from '@inertiajs/inertia'; // Importando Inertia para o redirecionamento
+import { Inertia } from '@inertiajs/inertia';
 
-// Definindo as propriedades recebidas
 const props = defineProps({
     business: Object,
 });
 
-// Criando o formulário usando a biblioteca Inertia
 const form = useForm({
     cnpj: props.business.cnpj,
     razao: props.business.razao,
@@ -24,11 +22,10 @@ const form = useForm({
     nome_socio: props.business.nome_socio,
 });
 
-// Função para buscar endereço pelo CEP
 const fetchAddress = async () => {
-    const cleanCep = form.cep.replace(/\D/g, ''); // Remove a máscara do CEP
-    if (cleanCep.length === 8) { // Verifica se o CEP tem 8 caracteres
-        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`); // Usa o CEP limpo na requisição
+    const cleanCep = form.cep.replace(/\D/g, '');
+    if (cleanCep.length === 8) {
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
         const data = await response.json();
         if (!data.erro) {
             form.endereco = data.logradouro;
@@ -43,19 +40,17 @@ const fetchAddress = async () => {
     }
 };
 
-// Função de envio
 const submit = () => {
-    // Remove a máscara dos campos antes de enviar
     const cleanData = {
-        cnpj: form.cnpj.replace(/\D/g, ''), // Limpa a máscara do CNPJ
+        cnpj: form.cnpj.replace(/\D/g, ''),
         razao: form.razao,
-        cep: form.cep.replace(/\D/g, ''), // Limpa a máscara do CEP
+        cep: form.cep.replace(/\D/g, ''),
         endereco: form.endereco,
         numero: form.numero,
         uf: form.uf,
         cidade: form.cidade,
         email: form.email,
-        telefone: form.telefone.replace(/\D/g, ''), // Limpa a máscara do telefone
+        telefone: form.telefone.replace(/\D/g, ''),
         nome_socio: form.nome_socio,
     };
 
@@ -65,7 +60,7 @@ const submit = () => {
             Inertia.visit('/dashboard/business');
         },
         onError: (errors) => {
-            console.error("Erro ao atualizar:", errors); // Log de erros
+            console.error("Erro ao atualizar:", errors);
         }
     });
 };
@@ -138,7 +133,3 @@ const submit = () => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-/* Adicione estilos específicos para o componente aqui */
-</style>

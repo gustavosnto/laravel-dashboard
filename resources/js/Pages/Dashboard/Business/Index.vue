@@ -34,7 +34,7 @@ const deleteBusiness = async (id) => {
 
         <div>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-x-auto"> <!-- Permite rolagem horizontal -->
+                <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-300 text-left">
                         <thead>
                             <tr>
@@ -47,7 +47,7 @@ const deleteBusiness = async (id) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="business in businesses" :key="business.id" class="whitespace-nowrap"> <!-- Adicionada classe para evitar quebras de linha -->
+                            <tr v-for="business in businesses" :key="business.id" class="whitespace-nowrap">
                                 <td class="border-b p-2">{{ business.id }}</td>
                                 <td class="border-b p-2">{{ business.cnpj ? maskCNPJ(business.cnpj) : '' }}</td>
                                 <td class="border-b p-2">{{ business.razao }}</td>
@@ -66,7 +66,3 @@ const deleteBusiness = async (id) => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-/* Adicione estilos específicos para o componente aqui */
-</style>

@@ -3,7 +3,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/inertia-vue3';
 
-// Função para remover a máscara e retornar apenas números
 const removeMask = (value) => value.replace(/\D/g, '');
 
 const form = useForm({
@@ -19,11 +18,10 @@ const form = useForm({
     nome_socio: '',
 });
 
-// Função para buscar endereço pelo CEP
 const fetchAddress = async () => {
-    const cleanCep = removeMask(form.cep); // Remove a máscara do CEP
-    if (cleanCep.length === 8) { // Verifica se o CEP tem 8 caracteres
-        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`); // Usa o CEP limpo na requisição
+    const cleanCep = removeMask(form.cep);
+    if (cleanCep.length === 8) {
+        const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
         const data = await response.json();
         if (!data.erro) {
             form.endereco = data.logradouro;
@@ -38,14 +36,11 @@ const fetchAddress = async () => {
     }
 };
 
-// Função de envio que remove as máscaras antes de enviar
 const submit = () => {
-    // Remover máscaras de todos os campos antes de enviar
     form.cnpj = removeMask(form.cnpj);
     form.cep = removeMask(form.cep);
     form.telefone = removeMask(form.telefone);
 
-    // Enviar os dados limpos
     form.post('/dashboard/business');
 };
 </script>
@@ -117,7 +112,3 @@ const submit = () => {
         </div>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-/* Adicione estilos específicos para o componente aqui */
-</style>
