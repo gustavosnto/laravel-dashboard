@@ -46,9 +46,11 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-white">Financeiro</h2>
-
-            <a class="bg-blue-500 text-white px-4 py-2 rounded ml-2" href="/dashboard/financial/create">Criar Cliente</a>
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-semibold leading-tight text-white">Financeiro</h2>
+                
+                <a class="bg-main text-black px-4 py-2 rounded" href="/dashboard/financial/create">Adicionar Cliente</a>
+            </div>
         </template>
 
         <div class="py-12">
