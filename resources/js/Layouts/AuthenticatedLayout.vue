@@ -51,6 +51,12 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Projetos
                                 </NavLink>
+                                <NavLink
+                                    :href="route('financial.index')"  
+                                    :active="route().current('financial.index')"
+                                >
+                                    Financeiro
+                                </NavLink>
                             </div>
                         </div>
 
@@ -169,6 +175,12 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('projects.index')"
                         >
                             Projetos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('financial.index')"
+                            :active="route().current('financial.index')"
+                        >
+                            Financeiro
                         </ResponsiveNavLink>
                     </div>
 
