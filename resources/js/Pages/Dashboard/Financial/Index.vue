@@ -55,11 +55,8 @@ onMounted(() => {
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <h3 class="text-lg font-bold">Lista de Clientes</h3>
-                        
-                        <!-- Popup de carregamento -->
                         <div v-if="loading" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
                             <div class="text-white">
                                 Carregando...
@@ -96,8 +93,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Adicione estilos específicos para o componente aqui */
 .fixed {
-    z-index: 999; /* Garante que o popup esteja acima de outros elementos */
+    z-index: 999;
 }
 </style>
