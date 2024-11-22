@@ -45,10 +45,10 @@ const deleteProject = async (id) => {
                                     <td class="border-b p-2">{{ project.id }}</td>
                                     <td class="border-b p-2">{{ project.name }}</td>
                                     <td class="border-b p-2">{{ project.technology }}</td>
-                                    <td class="border-b p-2">
-                                        <a :href="`/dashboard/projects/${project.id}`" class="text-blue-600">Ver</a>
-                                        <a :href="`/dashboard/projects/${project.id}/edit`" class="text-green-600 ml-2">Editar</a>
-                                        <button @click="deleteProject(project.id)" class="text-red-600 ml-2">Deletar</button>
+                                    <td class="border-b p-2 flex gap-3">
+                                        <a :href="`/dashboard/projects/${project.id}`" class="flex items-center justify-center h-8 px-3 bg-main rounded"><i class="fa-solid fa-eye"></i></a>
+                                        <a :href="`/dashboard/projects/${project.id}/edit`" class="flex items-center justify-center h-8 px-3 bg-main rounded"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <button @click="deleteProject(project.id)" class="flex items-center justify-center h-8 px-3 bg-main rounded"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <tr v-else>

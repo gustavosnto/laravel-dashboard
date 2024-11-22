@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
@@ -13,9 +14,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('dashboard/business', BusinessController::class);
