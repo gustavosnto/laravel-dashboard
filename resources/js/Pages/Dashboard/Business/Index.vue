@@ -1,19 +1,23 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia'; // Corrigido: Importando diretamente o Inertia
 
 const props = defineProps({
     businesses: Array,
 });
 
+// Função para aplicar a máscara de CNPJ
 const maskCNPJ = (cnpj) => {
     if (!cnpj) return '';
     return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
 };
 
+// Função para excluir uma empresa
 const deleteBusiness = async (id) => {
     if (confirm('Are you sure you want to delete this business?')) {
-        await this.$inertia.delete(`/dashboard/business/${id}`);
+        // Usando Inertia.delete() diretamente
+        Inertia.delete(`/dashboard/business/${id}`);
     }
 };
 </script>
@@ -68,3 +72,7 @@ const deleteBusiness = async (id) => {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+/* Adicione estilos específicos para o componente aqui */
+</style>

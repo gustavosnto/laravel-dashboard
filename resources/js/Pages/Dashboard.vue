@@ -47,7 +47,7 @@ const props = defineProps({
                 >
                     <div class="w-full md:w-2/3 shadow-sm md:rounded-lg bg-white p-6">
                         <header class="mb-3">
-                            <h2 class="text-xl font-bold">Últimos ...</h2>
+                            <h2 class="text-xl font-bold">Últimos projetos</h2>
                         </header>
                     </div>
                     <div class="w-full md:w-1/3 shadow-sm md:rounded-lg bg-white p-6">

@@ -19,6 +19,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('dashboard/business', BusinessController::class);
     Route::resource('dashboard/projects', ProjectController::class); 
+    Route::delete('dashboard/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     Route::get('dashboard/financial', [FinancialController::class, 'index'])->name('financial.index');
     Route::get('dashboard/financial/create', [FinancialController::class, 'create'])->name('financial.create');

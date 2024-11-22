@@ -88,7 +88,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $project->delete();
-
+    
         return redirect()->route('projects.index'); // Redireciona para a lista de projetos
     }
 }

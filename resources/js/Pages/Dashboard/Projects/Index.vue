@@ -1,14 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import { Inertia } from '@inertiajs/inertia'; // Corrigindo a importação do Inertia
 
 const props = defineProps({
     projects: Array,
 });
 
+// Função para excluir o projeto
 const deleteProject = async (id) => {
     if (confirm('Are you sure you want to delete this project?')) {
-        await this.$inertia.delete(`/projects/${id}`);
+        // Usando Inertia para deletar
+        Inertia.delete(`/dashboard/projects/${id}`);
     }
 };
 </script>
