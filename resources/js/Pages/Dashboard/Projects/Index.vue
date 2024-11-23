@@ -10,7 +10,7 @@ const props = defineProps({
 
 // Função para excluir o projeto
 const deleteProject = async (id) => {
-    if (confirm('Are you sure you want to delete this project?')) {
+    if (confirm('Tem certeza que deseja apagar esse projeto?')) {
         // Usando Inertia para deletar
         Inertia.delete(`/dashboard/projects/${id}`);
     }

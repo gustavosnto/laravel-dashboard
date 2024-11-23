@@ -60,7 +60,7 @@ const submit = () => {
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="submit">
-                            <div class="grid grid-cols-1 gap-4">
+                            <div class="grid md:grid-cols-2 gap-4">
                                 <div>
                                     <label for="cnpj" class="block text-sm font-medium text-gray-700">CNPJ</label>
                                     <input v-model="form.cnpj" v-mask="'##.###.###/####-##'" type="text" id="cnpj" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
@@ -103,7 +103,7 @@ const submit = () => {
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create Business</button>
+                                <button type="submit" class="bg-main text-black px-4 py-2 rounded">Concluir Cadastro</button>
                             </div>
                         </form>
                     </div>

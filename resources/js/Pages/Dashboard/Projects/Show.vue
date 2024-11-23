@@ -53,8 +53,8 @@ const formatDate = (date) => {
                             <p>{{ project.business.razao }}</p>
                         </div>
                         <div class="mt-6">
-                            <a class="bg-blue-500 text-white px-4 py-2 rounded" :href="`/dashboard/projects/${project.id}/edit`">Editar Projeto</a>
-                            <a class="bg-gray-500 text-white px-4 py-2 rounded ml-2" href="/dashboard/projects">Voltar para Projetos</a>
+                            <a class="bg-main text-black px-4 py-2 rounded" :href="`/dashboard/projects/${project.id}/edit`">Editar Projeto</a>
+                            <a class="border-main border-2 text-black px-4 py-2 rounded ml-2" href="/dashboard/projects">Voltar para Projetos</a>
                         </div>
                     </div>
                 </div>

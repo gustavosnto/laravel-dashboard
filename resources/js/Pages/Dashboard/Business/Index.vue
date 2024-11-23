@@ -15,7 +15,7 @@ const maskCNPJ = (cnpj) => {
 
 // Função para excluir uma empresa
 const deleteBusiness = async (id) => {
-    if (confirm('Are you sure you want to delete this business?')) {
+    if (confirm('Tem certeza que deseja apagar essa empresa?')) {
         // Usando Inertia.delete() diretamente
         Inertia.delete(`/dashboard/business/${id}`);
     }
