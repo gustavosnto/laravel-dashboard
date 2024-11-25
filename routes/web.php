@@ -4,10 +4,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FinancialController; 
-use App\Http\Controllers\FinancialClientController; 
-use App\Http\Controllers\FInancialBillingController; 
+use App\Http\Controllers\FinancialController;
+use App\Http\Controllers\FinancialClientController;
+use App\Http\Controllers\FinancialBillingController;
 use App\Http\Controllers\AsaasController;
+use App\Http\Controllers\AsaasBillingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,10 +27,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('dashboard/business', BusinessController::class);
-    Route::resource('dashboard/projects', ProjectController::class); 
+
+    Route::resource('dashboard/projects', ProjectController::class);
     Route::delete('dashboard/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-    // Financeiro Routes
     Route::get('dashboard/financial', [FinancialController::class, 'index'])->name('financial.index');
 
     Route::prefix('dashboard/financial/client')->group(function () {
@@ -43,25 +44,31 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('dashboard/financial/billing')->group(function () {
-        Route::get('/', [FInancialBillingController::class, 'index'])->name('financial.billing.index');
-        Route::get('/create', [FInancialBillingController::class, 'create'])->name('financial.billing.create');
-        Route::post('/', [FInancialBillingController::class, 'store'])->name('financial.billing.store');
-        Route::get('{id}', [FInancialBillingController::class, 'show'])->name('financial.billing.show');
-        Route::get('{id}/edit', [FInancialBillingController::class, 'edit'])->name('financial.billing.edit');
-        Route::put('{id}', [FInancialBillingController::class, 'update'])->name('financial.billing.update');
-        Route::delete('{id}', [FInancialBillingController::class, 'destroy'])->name('financial.billing.destroy');
+        Route::get('/', [FinancialBillingController::class, 'index'])->name('financial.billing.index');
+        Route::get('/create', [FinancialBillingController::class, 'create'])->name('financial.billing.create');
+        Route::post('/', [FinancialBillingController::class, 'store'])->name('financial.billing.store');
+        Route::get('{id}', [FinancialBillingController::class, 'show'])->name('financial.billing.show');
+        Route::get('{id}/edit', [FinancialBillingController::class, 'edit'])->name('financial.billing.edit');
+        Route::put('{id}', [FinancialBillingController::class, 'update'])->name('financial.billing.update');
+        Route::delete('{id}', [FinancialBillingController::class, 'destroy'])->name('financial.billing.destroy');
     });
-    // Route::get('dashboard/financial', [FinancialController::class, 'index'])->name('financial.index');
-    // Route::get('dashboard/financial/create', [FinancialController::class, 'create'])->name('financial.create');
-    // Route::post('dashboard/financial', [FinancialController::class, 'store'])->name('financial.store');
-    // Route::get('dashboard/financial/{id}', [FinancialController::class, 'show'])->name('financial.show');
-    // Route::get('dashboard/financial/{id}/edit', [FinancialController::class, 'edit'])->name('financial.edit');
 
-    Route::get('api/financial/customers', [AsaasController::class, 'index']);
-    Route::get('/api/financial/customers/{id}', [AsaasController::class, 'show']);
-    Route::post('api/financial/customers', [AsaasController::class, 'store']);
-    Route::put('api/financial/customers/{id}', [AsaasController::class, 'update']);
-    Route::delete('api/financial/customers/{id}', [AsaasController::class, 'destroy']);
+    // API Routes for Asaas Integration
+    Route::prefix('api/financial/customers')->group(function () {
+        Route::get('/', [AsaasController::class, 'index']);
+        Route::get('{id}', [AsaasController::class, 'show']);
+        Route::post('/', [AsaasController::class, 'store']);
+        Route::put('{id}', [AsaasController::class, 'update']);
+        Route::delete('{id}', [AsaasController::class, 'destroy']);
+    });
+
+    Route::prefix('api/financial/billing')->group(function () {
+        Route::get('/', [AsaasBillingController::class, 'index']);
+        Route::post('/', [AsaasBillingController::class, 'store']);
+        Route::get('{id}', [AsaasBillingController::class, 'show']);
+        Route::put('{id}', [AsaasBillingController::class, 'update']);
+        Route::delete('{id}', [AsaasBillingController::class, 'destroy']);
+    });
 });
 
 require __DIR__.'/auth.php';

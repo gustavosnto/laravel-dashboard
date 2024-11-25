@@ -77,9 +77,13 @@ onMounted(() => {
                                     <td class="border-b p-2">{{ customer.name }}</td>
                                     <td class="border-b p-2">{{ customer.email }}</td>
                                     <td class="border-b p-2">{{ customer.phone }}</td>
-                                    <td class="border-b p-2">
-                                        <a :href="`/dashboard/financial/client/${customer.id}`">Ver</a>
-                                        <button @click="deleteCustomer(customer.id)" class="text-red-600 ml-2">Excluir</button>
+                                    <td class="border-b p-2 flex gap-3">
+                                        <a :href="`/dashboard/financial/client/${customer.id}`" class="flex items-center justify-center h-8 px-4 bg-main text-black rounded gap-2">
+                                            <i class="fa-solid fa-eye"></i> Ver
+                                        </a>
+                                        <button @click="deleteCustomer(customer.id)" class="flex items-center justify-center h-8 px-3 bg-red-500 text-white rounded gap-2">
+                                            <i class="fa-solid fa-trash"></i> Excluir
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

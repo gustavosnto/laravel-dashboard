@@ -15,9 +15,23 @@ const fetchFinancialData = async () => {
         const clientsResponse = await axios.get('/api/financial/customers');
         totalClients.value = clientsResponse.data.data.length;
 
-        // Carregar o total de cobranças (Exemplo)
-        const billingsResponse = await axios.get('/api/financial/billings');
-        totalBillings.value = billingsResponse.data.data.length;
+        // Carregar o total de cobranças
+        const billingsResponse = await axios.get('/api/financial/billing', {
+            headers: {
+                accept: 'application/json',
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Use seu token aqui
+            }
+        });
+
+        // Log para verificar a resposta da API
+        console.log('Resposta de Cobranças:', billingsResponse.data);
+        
+        // Verificar se a resposta contém dados e ajustar conforme a estrutura da API
+        if (billingsResponse.data && Array.isArray(billingsResponse.data)) {
+            totalBillings.value = billingsResponse.data.length; // Atualiza com a quantidade de cobranças
+        } else {
+            totalBillings.value = 0; // Em caso de erro ou dados vazios
+        }
     } catch (error) {
         console.error("Erro ao buscar dados financeiros:", error);
     } finally {
@@ -26,7 +40,7 @@ const fetchFinancialData = async () => {
 };
 
 onMounted(() => {
-    fetchFinancialData();
+    fetchFinancialData(); // Chama a função de busca ao montar o componente
 });
 </script>
 
@@ -50,17 +64,14 @@ onMounted(() => {
                             <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">{{ totalClients }}</p>
                                 <div>Clientes</div>
-                                <a class="bg-blue-500 text-white px-4 py-2 rounded mt-2" href="/dashboard/financial/client">Ver Clientes</a>
                             </div>
                             <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">{{ totalBillings }}</p>
                                 <div>Cobranças</div>
-                                <a class="bg-blue-500 text-white px-4 py-2 rounded mt-2" href="/dashboard/financial/billing">Ver Cobranças</a>
                             </div>
                             <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">...</p>
                                 <div>Outras informações</div>
-                                <a class="bg-blue-500 text-white px-4 py-2 rounded mt-2" href="#">Ver Detalhes</a>
                             </div>
                         </div>
                     </div>

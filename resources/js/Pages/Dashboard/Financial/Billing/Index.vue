@@ -17,7 +17,17 @@ const fetchBillings = async () => {
                 access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Use seu token aqui
             }
         });
-        billings.value = response.data.data;
+
+        // Log para depuração: verificar a estrutura dos dados
+        console.log('Resposta da API:', response.data);
+
+        // Verifica se a resposta tem dados e se é um array
+        if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+            billings.value = response.data; // Atualiza com os dados recebidos
+        } else {
+            billings.value = [];
+            console.error("Dados de cobrança não encontrados ou com formato incorreto.");
+        }
     } catch (error) {
         console.error("Erro ao buscar cobranças:", error);
     } finally {
@@ -77,6 +87,7 @@ onMounted(() => {
                                     <th class="border-b p-2">Valor</th>
                                     <th class="border-b p-2">Vencimento</th>
                                     <th class="border-b p-2">Status</th>
+                                    <th class="border-b p-2">Número de Fatura</th>
                                     <th class="border-b p-2">Ações</th>
                                 </tr>
                             </thead>
@@ -86,14 +97,15 @@ onMounted(() => {
                                     <td class="border-b p-2">{{ billing.value }}</td>
                                     <td class="border-b p-2">{{ billing.dueDate }}</td>
                                     <td class="border-b p-2">{{ billing.status }}</td>
+                                    <td class="border-b p-2">{{ billing.invoiceNumber }}</td>
                                     <td class="border-b p-2 flex gap-3">
-                                        <a :href="`/dashboard/financial/billing/${billing.id}`" class="flex items-center justify-center h-8 px-3 bg-main rounded">
+                                        <a :href="`/dashboard/financial/billing/${billing.id}`" class="flex items-center justify-center h-8 px-3 bg-main rounded gap-2">
                                             <i class="fa-solid fa-eye"></i> Ver
                                         </a>
-                                        <a :href="`/dashboard/financial/billing/${billing.id}/edit`" class="flex items-center justify-center h-8 px-3 bg-main rounded">
+                                        <a :href="`/dashboard/financial/billing/${billing.id}/edit`" class="flex items-center justify-center h-8 px-3 bg-main rounded gap-2">
                                             <i class="fa-solid fa-pen-to-square"></i> Editar
                                         </a>
-                                        <button @click="deleteBilling(billing.id)" class="flex items-center justify-center h-8 px-3 bg-red-500 rounded">
+                                        <button @click="deleteBilling(billing.id)" class="flex items-center justify-center h-8 px-3 bg-red-500 text-white rounded gap-2">
                                             <i class="fa-solid fa-trash"></i> Excluir
                                         </button>
                                     </td>
