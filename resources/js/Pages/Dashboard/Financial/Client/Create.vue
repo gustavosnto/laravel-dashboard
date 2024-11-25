@@ -2,9 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import axios from 'axios'; // Importando o Axios
+import axios from 'axios';
 
-// Criando referências para os campos do formulário
 const name = ref('');
 const cpfCnpj = ref('');
 const email = ref('');
@@ -13,21 +12,18 @@ const mobilePhone = ref('');
 const address = ref('');
 const addressNumber = ref('');
 const complement = ref('');
-const province = ref(''); // Usado para bairro
+const province = ref('');
 const postalCode = ref('');
 const additionalEmails = ref('');
 const company = ref('');
 
-// Função para aplicar a máscara de CPF/CNPJ
 const maskCpfCnpj = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    const cleanValue = value.replace(/\D/g, '');
     if (cleanValue.length <= 11) {
-        // CPF
         return cleanValue.replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     } else {
-        // CNPJ
         return cleanValue.replace(/(\d{2})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d{4})(\d)/, "$1.$2/$3")
@@ -35,33 +31,27 @@ const maskCpfCnpj = (value) => {
     }
 };
 
-// Função para aplicar a máscara de telefone
 const maskPhone = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    const cleanValue = value.replace(/\D/g, '');
     if (cleanValue.length <= 10) {
-        // Telefone
         return cleanValue.replace(/(\d{2})(\d)/, "($1) $2")
                          .replace(/(\d{4})(\d)/, "$1-$2");
     } else {
-        // Celular
         return cleanValue.replace(/(\d{2})(\d)/, "($1) $2")
                          .replace(/(\d{5})(\d)/, "$1-$2");
     }
 };
 
-// Função para aplicar a máscara de CEP
 const maskPostalCode = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    return cleanValue.replace(/(\d{5})(\d)/, "$1-$2"); // Formato: 00000-000
+    const cleanValue = value.replace(/\D/g, '');
+    return cleanValue.replace(/(\d{5})(\d)/, "$1-$2");
 };
 
-// Função para buscar dados de endereço através do CEP
 const fetchAddressByCep = async (cep) => {
-    if (cep.length === 8) { // Verifica se o CEP está completo
+    if (cep.length === 8) {
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
             if (response.data && !response.data.erro) {
-                // Preenche os campos de endereço e bairro
                 address.value = response.data.logradouro;
                 province.value = response.data.bairro;
             } else {
@@ -73,17 +63,14 @@ const fetchAddressByCep = async (cep) => {
     }
 };
 
-// Função para limpar a máscara antes de enviar
 const clearMask = (value) => {
-    return value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    return value.replace(/\D/g, '');
 };
 
 const submit = async () => {
     try {
-        // Limpa a máscara do CEP antes de enviar
         const cleanedPostalCode = clearMask(postalCode.value);
 
-        // Enviando os dados do novo cliente para a API
         await axios.post('/api/financial/customers', {
             name: name.value,
             cpfCnpj: cpfCnpj.value,
@@ -94,26 +81,24 @@ const submit = async () => {
             addressNumber: addressNumber.value,
             complement: complement.value,
             province: province.value,
-            postalCode: cleanedPostalCode, // Usa o CEP limpo
+            postalCode: cleanedPostalCode,
             additionalEmails: additionalEmails.value,
             company: company.value,
         }, {
             headers: {
                 accept: 'application/json',
-                access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Adicione seu token aqui
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
             }
         });
-        // Redirecionar ou mostrar uma mensagem de sucesso
-        window.location.href = '/dashboard/financial'; // Redireciona para a lista de clientes após a criação
+        window.location.href = '/dashboard/financial/client';
     } catch (error) {
         console.error("Erro ao criar cliente:", error.response ? error.response.data : error);
     }
 };
 
-// Evento de blur para buscar endereço ao sair do campo de CEP
 const handlePostalCodeBlur = () => {
-    postalCode.value = clearMask(postalCode.value); // Limpa a máscara do CEP
-    fetchAddressByCep(postalCode.value); // Chama a função para buscar o endereço
+    postalCode.value = clearMask(postalCode.value);
+    fetchAddressByCep(postalCode.value);
 };
 </script>
 
@@ -130,7 +115,7 @@ const handlePostalCodeBlur = () => {
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="submit">
-                            <div class="grid grid-cols-1 gap-4">
+                            <div class="grid md:grid-cols-2 gap-4">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">Nome</label>
                                     <input v-model="name" type="text" id="name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required />
@@ -209,7 +194,7 @@ const handlePostalCodeBlur = () => {
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Adicionar Cliente</button>
+                                <button type="submit" class="bg-main text-black px-4 py-2 rounded">Adicionar Cliente</button>
                             </div>
                         </form>
                     </div>
@@ -220,5 +205,4 @@ const handlePostalCodeBlur = () => {
 </template>
 
 <style scoped>
-/* Adicione estilos específicos para o componente aqui */
 </style>
