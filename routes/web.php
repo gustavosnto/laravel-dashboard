@@ -7,8 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\FinancialClientController;
 use App\Http\Controllers\FinancialBillingController;
+use App\Http\Controllers\FinancialSubscriptionController;
 use App\Http\Controllers\AsaasController;
 use App\Http\Controllers\AsaasBillingController;
+use App\Http\Controllers\AsaasSubscriptionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,6 +54,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('{id}', [FinancialBillingController::class, 'destroy'])->name('financial.billing.destroy');
     });
 
+    Route::prefix('dashboard/financial/subscription')->group(function () {
+        // Corrigido o nome da rota para "financial.subscription.show"
+        Route::get('/', [FinancialSubscriptionController::class, 'index'])->name('financial.subscription.index');
+        Route::get('/create', [FinancialSubscriptionController::class, 'create'])->name('financial.subscription.create');
+        Route::post('/', [FinancialSubscriptionController::class, 'store'])->name('financial.subscription.store');
+        // Corrigido o nome da rota para "financial.subscription.show"
+        Route::get('{id}', [FinancialSubscriptionController::class, 'show'])->name('financial.subscription.show');
+        Route::get('{id}/edit', [FinancialSubscriptionController::class, 'edit'])->name('financial.subscription.edit');
+        Route::put('{id}', [FinancialSubscriptionController::class, 'update'])->name('financial.subscription.update');
+        Route::delete('{id}', [FinancialSubscriptionController::class, 'destroy'])->name('financial.subscription.destroy');
+    });
+
     // API Routes for Asaas Integration
     Route::prefix('api/financial/customers')->group(function () {
         Route::get('/', [AsaasController::class, 'index']);
@@ -67,6 +81,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('{id}', [AsaasBillingController::class, 'show']);
         Route::put('{id}', [AsaasBillingController::class, 'update']);
         Route::delete('{id}', [AsaasBillingController::class, 'destroy']);
+    });
+
+    Route::prefix('api/financial/subscription')->group(function () {
+        Route::get('/', [AsaasSubscriptionController::class, 'index']);
+        Route::post('/', [AsaasSubscriptionController::class, 'store']);
+        Route::get('{id}', [AsaasSubscriptionController::class, 'show']);
+        Route::put('{id}', [AsaasSubscriptionController::class, 'update']);
+        Route::delete('{id}', [AsaasSubscriptionController::class, 'destroy']);
     });
 });
 

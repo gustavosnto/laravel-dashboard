@@ -12,7 +12,6 @@ class FinancialClientController extends Controller
 
     public function index()
     {
-        // Exibe todos os clientes da API do Asaas
         $response = Http::withHeaders([
             'accept' => 'application/json',
             'access_token' => env('ASAAS_API_TOKEN'),
@@ -30,7 +29,6 @@ class FinancialClientController extends Controller
 
     public function store(Request $request)
     {
-        // Criação de um novo cliente
         $response = Http::withHeaders([
             'accept' => 'application/json',
             'access_token' => env('ASAAS_API_TOKEN'),

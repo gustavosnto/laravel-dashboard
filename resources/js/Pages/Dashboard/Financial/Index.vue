@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const totalClients = ref(0);
 const totalBillings = ref(0);
+const totalSubscriptions = ref(0);
 const loading = ref(true);
 
 const fetchFinancialData = async () => {
@@ -20,13 +21,24 @@ const fetchFinancialData = async () => {
                 access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
             }
         });
-
-        console.log('Resposta de Cobranças:', billingsResponse.data);
         
         if (billingsResponse.data && Array.isArray(billingsResponse.data)) {
             totalBillings.value = billingsResponse.data.length;
         } else {
             totalBillings.value = 0;
+        }
+
+        const subscriptionsResponse = await axios.get('/api/financial/subscription', {
+            headers: {
+                accept: 'application/json',
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
+            }
+        });
+        
+        if (subscriptionsResponse.data && Array.isArray(subscriptionsResponse.data)) {
+            totalSubscriptions.value = subscriptionsResponse.data.length;
+        } else {
+            totalSubscriptions.value = 0;
         }
     } catch (error) {
         console.error("Erro ao buscar dados financeiros:", error);
@@ -66,8 +78,8 @@ onMounted(() => {
                                 <div>Cobranças</div>
                             </div>
                             <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
-                                <p class="text-3xl font-bold">...</p>
-                                <div>Outras informações</div>
+                                <p class="text-3xl font-bold">{{ totalSubscriptions }}</p>
+                                <div>Assinaturas</div>
                             </div>
                         </div>
                     </div>
@@ -83,6 +95,10 @@ onMounted(() => {
                         <a href="/dashboard/financial/billing" class="bg-gray-500 text-white p-4 rounded-lg flex items-center justify-center">
                             <i class="fa-solid fa-file-invoice mr-2"></i>
                             Gerenciar Cobranças
+                        </a>
+                        <a href="/dashboard/financial/subscription" class="bg-gray-500 text-white p-4 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-file-invoice mr-2"></i>
+                            Gerenciar Assinaturas
                         </a>
                     </div>
                 </div>

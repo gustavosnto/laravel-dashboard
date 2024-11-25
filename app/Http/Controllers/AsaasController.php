@@ -9,7 +9,6 @@ class AsaasController extends Controller
 {
     private $baseUrl = 'https://sandbox.asaas.com/api/v3/customers';
 
-    // Método para listar clientes
     public function index()
     {
         try {
@@ -42,15 +41,14 @@ class AsaasController extends Controller
         }
     }
 
-    // Método para criar um novo cliente
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'cpfCnpj' => 'required|string|max:20', // Adicione validação para CPF/CNPJ
+            'cpfCnpj' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:15',
-            'mobilePhone' => 'nullable|string|max:15', // Telefone móvel é opcional
+            'mobilePhone' => 'nullable|string|max:15',
             'address' => 'required|string|max:255',
             'addressNumber' => 'required|string|max:10',
             'complement' => 'nullable|string|max:255',
@@ -83,15 +81,14 @@ class AsaasController extends Controller
         }
     }
 
-    // Método para atualizar um cliente existente
     public function update(Request $request, $id)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'cpfCnpj' => 'required|string|max:20', // Adicione validação para CPF/CNPJ
+            'cpfCnpj' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:15',
-            'mobilePhone' => 'nullable|string|max:15', // Telefone móvel é opcional
+            'mobilePhone' => 'nullable|string|max:15',
             'address' => 'required|string|max:255',
             'addressNumber' => 'required|string|max:10',
             'complement' => 'nullable|string|max:255',
@@ -124,7 +121,6 @@ class AsaasController extends Controller
         }
     }
 
-    // Método para deletar um cliente
     public function destroy($id)
     {
         try {

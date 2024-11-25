@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
-class FinancialBillingController extends Controller
+class FinancialSubscriptionController extends Controller
 {
     private $baseUrl;
 
     public function __construct()
     {
-        $this->baseUrl = 'https://sandbox.asaas.com/api/v3/payments';
+        $this->baseUrl = 'https://sandbox.asaas.com/api/v3/subscriptions';
     }
 
     public function index()
@@ -24,7 +24,7 @@ class FinancialBillingController extends Controller
             ])->get($this->baseUrl);
 
             if ($response->successful()) {
-                return Inertia::render('Dashboard/Financial/Billing/Index', [
+                return Inertia::render('Dashboard/Financial/Subscription/Index', [
                     'billings' => $response->json()['data'],
                 ]);
             } else {
@@ -37,7 +37,7 @@ class FinancialBillingController extends Controller
 
     public function create()
     {
-        return Inertia::render('Dashboard/Financial/Billing/Create');
+        return Inertia::render('Dashboard/Financial/Subscription/Create');
     }
 
     public function store(Request $request)
@@ -106,7 +106,7 @@ class FinancialBillingController extends Controller
         ])->get("{$this->baseUrl}/{$id}");
 
         if ($response->successful()) {
-            return Inertia::render('Dashboard/Financial/Billing/Show', [
+            return Inertia::render('Dashboard/Financial/Subscription/Show', [
                 'billing' => $response->json(),
             ]);
         } else {
@@ -122,7 +122,7 @@ class FinancialBillingController extends Controller
         ])->get("{$this->baseUrl}/{$id}");
 
         if ($response->successful()) {
-            return Inertia::render('Dashboard/Financial/Billing/Edit', [
+            return Inertia::render('Dashboard/Financial/Subscription/Edit', [
                 'billing' => $response->json(),
             ]);
         } else {

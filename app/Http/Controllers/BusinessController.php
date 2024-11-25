@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business; // Certifique-se de importar o modelo
+use App\Models\Business;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class BusinessController extends Controller
 {
-    // Método para exibir a lista de negócios
     public function index()
     {
         $businesses = Business::all(); 
@@ -17,16 +16,13 @@ class BusinessController extends Controller
         ]);
     }
 
-    // Método para criar um novo negócio
     public function create()
     {
-        return Inertia::render('Dashboard/Business/Create'); // Retorne a view para criar um novo negócio
+        return Inertia::render('Dashboard/Business/Create');
     }
 
-    // Método para armazenar um novo negócio
     public function store(Request $request)
     {
-        // Valide e salve o novo negócio
         $request->validate([
             'cnpj' => 'required|string|max:14',
             'razao' => 'required|string|max:255',
@@ -42,37 +38,33 @@ class BusinessController extends Controller
 
         Business::create($request->all());
         
-        return redirect()->route('business.index'); // Redirecione para a lista de negócios
+        return redirect()->route('business.index');
     }
 
-    // Método para mostrar um negócio específico
     public function show($id)
     {
         $business = Business::findOrFail($id);
         
         return Inertia::render('Dashboard/Business/Show', [
             'business' => $business
-        ]); // Retorne a view para mostrar um negócio
+        ]);
     }
 
-    // Método para editar um negócio
     public function edit($id)
     {
         $business = Business::findOrFail($id);
         
         return Inertia::render('Dashboard/Business/Edit', [
             'business' => $business
-        ]); // Retorne a view para editar um negócio
+        ]);
     }
 
-    // Método para atualizar um negócio
     public function update(Request $request, $id)
     {
-        // Limpar campos antes da validação
         $request->merge([
-            'cnpj' => preg_replace('/\D/', '', $request->cnpj), // Remove todos os caracteres não numéricos
-            'cep' => preg_replace('/\D/', '', $request->cep), // Remove todos os caracteres não numéricos
-            'telefone' => preg_replace('/\D/', '', $request->telefone), // Remove todos os caracteres não numéricos
+            'cnpj' => preg_replace('/\D/', '', $request->cnpj),
+            'cep' => preg_replace('/\D/', '', $request->cep),
+            'telefone' => preg_replace('/\D/', '', $request->telefone),
         ]);
 
         $request->validate([
@@ -91,15 +83,14 @@ class BusinessController extends Controller
         $business = Business::findOrFail($id);
         $business->update($request->all());
         
-        return redirect()->route('business.index'); // Redirecione para a lista de negócios
+        return redirect()->route('business.index');
     }
 
-    // Método para excluir um negócio
     public function destroy($id)
     {
         $business = Business::findOrFail($id);
         $business->delete();
         
-        return redirect()->route('business.index'); // Redirecione para a lista de negócios
+        return redirect()->route('business.index');
     }
 }
