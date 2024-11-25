@@ -38,11 +38,11 @@ const formatDate = (date) => {
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Data de Início:</h3>
-                            <p>{{ formatDate(project.start_date) }}</p> <!-- Aplicando formatação -->
+                            <p>{{ formatDate(project.start_date) }}</p>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Data de Entrega:</h3>
-                            <p>{{ formatDate(project.end_date) }}</p> <!-- Aplicando formatação -->
+                            <p>{{ formatDate(project.end_date) }}</p>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Informações Adicionais:</h3>

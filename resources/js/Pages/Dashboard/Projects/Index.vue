@@ -2,16 +2,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
-import { Inertia } from '@inertiajs/inertia'; // Corrigindo a importação do Inertia
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     projects: Array,
 });
 
-// Função para excluir o projeto
 const deleteProject = async (id) => {
     if (confirm('Tem certeza que deseja apagar esse projeto?')) {
-        // Usando Inertia para deletar
         Inertia.delete(`/dashboard/projects/${id}`);
     }
 };

@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
@@ -11,7 +10,6 @@ const props = defineProps({
 const deleteBilling = async () => {
     if (confirm('Tem certeza que deseja excluir esta cobrança?')) {
         await axios.delete(`/dashboard/financial/billing/${props.billing.id}`);
-        // Após excluir, redireciona para a lista de cobranças
         window.location.href = '/dashboard/financial/billing';
     }
 };

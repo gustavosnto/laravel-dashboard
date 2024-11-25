@@ -5,17 +5,17 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const customers = ref([]);
-const loading = ref(true); // Variável para controlar o estado de carregamento
+const loading = ref(true);
 
 const fetchCustomers = async () => {
-    loading.value = true; // Começa o carregamento
+    loading.value = true;
     try {
         const response = await axios.get('/api/financial/customers', {});
         customers.value = response.data.data;
     } catch (error) {
         console.error("Erro ao buscar clientes:", error);
     } finally {
-        loading.value = false; // Finaliza o carregamento
+        loading.value = false;
     }
 };
 
@@ -28,7 +28,6 @@ const deleteCustomer = async (id) => {
                     access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
                 }
             });
-            // Atualiza a lista de clientes após a exclusão
             customers.value = customers.value.filter(customer => customer.id !== id);
         } catch (error) {
             console.error("Erro ao excluir cliente:", error.response ? error.response.data : error);

@@ -1,8 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import axios from 'axios'; // Importando o Axios
+import axios from 'axios';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { defineProps } from 'vue';
 
@@ -10,7 +9,6 @@ const props = defineProps({
     customer: Object,
 });
 
-// Criando o formulário usando a biblioteca Inertia
 const form = useForm({
     id: props.customer.id,
     name: props.customer.name,
@@ -27,16 +25,13 @@ const form = useForm({
     company: props.customer.company,
 });
 
-// Função para aplicar a máscara de CPF/CNPJ
 const maskCpfCnpj = (value) => {
-    const cleanValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    const cleanValue = value.replace(/\D/g, '');
     if (cleanValue.length <= 11) {
-        // CPF
         return cleanValue.replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     } else {
-        // CNPJ
         return cleanValue.replace(/(\d{2})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d)/, "$1.$2")
                          .replace(/(\d{3})(\d{4})(\d)/, "$1/$2")
@@ -44,23 +39,20 @@ const maskCpfCnpj = (value) => {
     }
 };
 
-// Função para aplicar a máscara de telefone
 const maskPhone = (value) => {
     const cleanValue = value.replace(/\D/g, '');
     if (cleanValue.length === 11) {
-        return cleanValue.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (xx) xxxxx-xxxx
+        return cleanValue.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
     } else if (cleanValue.length === 10) {
-        return cleanValue.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (xx) xxxx-xxxx
+        return cleanValue.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
     }
     return value;
 };
 
-// Função para aplicar a máscara de CEP
 const maskPostalCode = (value) => {
-    return value.replace(/\D/g, '').replace(/(\d{5})(\d)/, "$1-$2"); // Formato 12345-678
+    return value.replace(/\D/g, '').replace(/(\d{5})(\d)/, "$1-$2");
 };
 
-// Função para buscar endereço pelo CEP
 const fetchAddress = async () => {
     const cleanCep = form.postalCode.replace(/\D/g, '');
     if (cleanCep.length === 8) {
@@ -68,7 +60,7 @@ const fetchAddress = async () => {
             const response = await axios.get(`https://viacep.com.br/ws/${cleanCep}/json/`);
             if (response.data && !response.data.erro) {
                 form.address = response.data.logradouro;
-                form.province = response.data.bairro; // Ajuste se necessário
+                form.province = response.data.bairro;
             } else {
                 alert('CEP não encontrado.');
             }
@@ -78,7 +70,6 @@ const fetchAddress = async () => {
     }
 };
 
-// Função de envio
 const submit = async () => {
     try {
         await axios.put(`/api/financial/customers/${form.id}`, {
@@ -97,11 +88,10 @@ const submit = async () => {
         }, {
             headers: {
                 accept: 'application/json',
-                access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Adicione seu token aqui
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
             }
         });
-        // Redirecionar ou mostrar uma mensagem de sucesso
-        window.location.href = '/dashboard/financial'; // Redireciona para a lista de clientes após a atualização
+        window.location.href = '/dashboard/financial';
     } catch (error) {
         console.error("Erro ao atualizar cliente:", error.response ? error.response.data : error);
     }

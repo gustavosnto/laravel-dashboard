@@ -5,25 +5,22 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const billings = ref([]);
-const loading = ref(true); // Variável para controlar o estado de carregamento
+const loading = ref(true);
 
-// Função para buscar as cobranças
 const fetchBillings = async () => {
-    loading.value = true; // Começa o carregamento
+    loading.value = true;
     try {
         const response = await axios.get('/api/financial/billing', {
             headers: {
                 accept: 'application/json',
-                access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Use seu token aqui
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
             }
         });
 
-        // Log para depuração: verificar a estrutura dos dados
         console.log('Resposta da API:', response.data);
 
-        // Verifica se a resposta tem dados e se é um array
         if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-            billings.value = response.data; // Atualiza com os dados recebidos
+            billings.value = response.data;
         } else {
             billings.value = [];
             console.error("Dados de cobrança não encontrados ou com formato incorreto.");
@@ -31,11 +28,10 @@ const fetchBillings = async () => {
     } catch (error) {
         console.error("Erro ao buscar cobranças:", error);
     } finally {
-        loading.value = false; // Finaliza o carregamento
+        loading.value = false;
     }
 };
 
-// Função para excluir uma cobrança
 const deleteBilling = async (id) => {
     if (confirm('Tem certeza que deseja excluir esta cobrança?')) {
         try {
@@ -45,7 +41,6 @@ const deleteBilling = async (id) => {
                     access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
                 }
             });
-            // Atualiza a lista de cobranças após a exclusão
             billings.value = billings.value.filter(billing => billing.id !== id);
         } catch (error) {
             console.error("Erro ao excluir cobrança:", error.response ? error.response.data : error);

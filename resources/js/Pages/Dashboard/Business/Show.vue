@@ -39,7 +39,7 @@ const formatCEP = (cep) => {
                     <div class="p-6 text-gray-900">
                         <div>
                             <h3 class="text-lg font-bold">CNPJ:</h3>
-                            <p>{{ formatCNPJ(business.cnpj) }}</p> <!-- Aplicando a formatação -->
+                            <p>{{ formatCNPJ(business.cnpj) }}</p>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Razão Social:</h3>
@@ -49,12 +49,12 @@ const formatCEP = (cep) => {
                             <h3 class="text-lg font-bold">Endereço:</h3>
                             <p>{{ business.endereco }}, {{ business.numero }}</p>
                             <p>{{ business.cidade }} - {{ business.uf }}</p>
-                            <p>CEP: {{ formatCEP(business.cep) }}</p> <!-- Aplicando a formatação -->
+                            <p>CEP: {{ formatCEP(business.cep) }}</p>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Contato:</h3>
                             <p>Email: {{ business.email }}</p>
-                            <p>Telefone: {{ formatPhone(business.telefone) }}</p> <!-- Aplicando a formatação -->
+                            <p>Telefone: {{ formatPhone(business.telefone) }}</p>
                         </div>
                         <div class="mt-4">
                             <h3 class="text-lg font-bold">Nome do Sócio:</h3>

@@ -6,31 +6,27 @@ import axios from 'axios';
 
 const totalClients = ref(0);
 const totalBillings = ref(0);
-const loading = ref(true); // Variável para controlar o estado de carregamento
+const loading = ref(true);
 
 const fetchFinancialData = async () => {
     loading.value = true;
     try {
-        // Carregar o total de clientes
         const clientsResponse = await axios.get('/api/financial/customers');
         totalClients.value = clientsResponse.data.data.length;
 
-        // Carregar o total de cobranças
         const billingsResponse = await axios.get('/api/financial/billing', {
             headers: {
                 accept: 'application/json',
-                access_token: import.meta.env.VITE_ASAAS_API_TOKEN, // Use seu token aqui
+                access_token: import.meta.env.VITE_ASAAS_API_TOKEN,
             }
         });
 
-        // Log para verificar a resposta da API
         console.log('Resposta de Cobranças:', billingsResponse.data);
         
-        // Verificar se a resposta contém dados e ajustar conforme a estrutura da API
         if (billingsResponse.data && Array.isArray(billingsResponse.data)) {
-            totalBillings.value = billingsResponse.data.length; // Atualiza com a quantidade de cobranças
+            totalBillings.value = billingsResponse.data.length;
         } else {
-            totalBillings.value = 0; // Em caso de erro ou dados vazios
+            totalBillings.value = 0;
         }
     } catch (error) {
         console.error("Erro ao buscar dados financeiros:", error);
@@ -40,7 +36,7 @@ const fetchFinancialData = async () => {
 };
 
 onMounted(() => {
-    fetchFinancialData(); // Chama a função de busca ao montar o componente
+    fetchFinancialData();
 });
 </script>
 
@@ -98,8 +94,5 @@ onMounted(() => {
 <style scoped>
 .fixed {
     z-index: 999;
-}
-.bg-main {
-    background-color: #4CAF50; /* Altere para a cor desejada */
 }
 </style>

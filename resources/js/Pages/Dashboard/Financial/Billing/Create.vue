@@ -9,7 +9,7 @@ const form = useForm({
     value: '',
     dueDate: '',
     description: '',
-    billingType: 'BOLETO', // Valor padrão
+    billingType: 'BOLETO',
     externalReference: '',
     discount: {
         value: null,
