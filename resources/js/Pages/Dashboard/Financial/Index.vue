@@ -69,15 +69,15 @@ onMounted(() => {
                         </div>
 
                         <div class="grid md:grid-cols-3 gap-6">
-                            <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
+                            <div class="w-full py-4 md:py-0 md:h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">{{ totalClients }}</p>
                                 <div>Clientes</div>
                             </div>
-                            <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
+                            <div class="w-full py-4 md:py-0 md:h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">{{ totalBillings }}</p>
                                 <div>Cobranças</div>
                             </div>
-                            <div class="w-full h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
+                            <div class="w-full py-4 md:py-0 md:h-32 bg-main/50 flex flex-col items-center justify-center rounded-lg">
                                 <p class="text-3xl font-bold">{{ totalSubscriptions }}</p>
                                 <div>Assinaturas</div>
                             </div>
@@ -85,7 +85,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <div class="mt-8">
+                <div class="mt-8 px-6">
                     <h3 class="text-xl font-bold">Direções rápidas</h3>
                     <div class="grid md:grid-cols-2 gap-6 mt-4">
                         <a href="/dashboard/financial/client" class="bg-gray-500 text-white p-4 rounded-lg flex items-center justify-center">

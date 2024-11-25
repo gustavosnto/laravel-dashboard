@@ -55,7 +55,7 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('financial.index')"  
                                     :active="route().current('financial.index')"
                                 >
-                                    Financeiro
+                                    Financeiro <span class="ml-1 py-[2px] px-1 text-xs bg-main/20 rounded">novo</span>
                                 </NavLink>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ const showingNavigationDropdown = ref(false);
                             :href="route('financial.index')"
                             :active="route().current('financial.index')"
                         >
-                            Financeiro
+                            Financeiro <span class="ml-1 py-[2px] px-1 text-xs bg-main/20 rounded">novo</span>
                         </ResponsiveNavLink>
                     </div>
 
